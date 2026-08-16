@@ -11,3 +11,10 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
