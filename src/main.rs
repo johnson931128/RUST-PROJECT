@@ -6,6 +6,13 @@ struct Intersection {
     y: f32,
 }
 
+struct Vehicle {
+    x: f32,
+    y: f32,
+    speed: f32,
+}
+
+
 #[macroquad::main("Urban Logistics Simulator")]
 async fn main() {
     let intersections = [
@@ -35,6 +42,12 @@ async fn main() {
         (5, 8),
     ];
 
+    let mut vehicle = Vehicle {
+        x: intersections[0].x,
+        y: intersections[0].y,
+        speed: 100.0,
+    };
+
     loop {
         clear_background(LIGHTGRAY);
 
@@ -48,6 +61,18 @@ async fn main() {
         for intersection in &intersections {
             draw_circle(intersection.x, intersection.y, 12.0, BLUE);
         }
+
+        let dt = get_frame_time();
+        
+        let target_x = intersections[1].x;
+        if vehicle.x < target_x {
+            vehicle.x += vehicle.speed * dt;
+
+            if vehicle.x > target_x{
+                vehicle.x = target_x;
+            }
+        }
+        draw_circle(vehicle.x, vehicle.y, 8.0, RED);
 
         next_frame().await;
     }
